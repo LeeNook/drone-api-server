@@ -4,6 +4,7 @@ import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 import cors from "cors";
+import mockConfigs from './mock-configs.json' assert { type: 'json' }; // <-- เพิ่มบรรทัดนี้
 
 // --- 1. Setup ---
 dotenv.config();
@@ -29,22 +30,22 @@ app.get("/", (req, res) => {
 app.get("/configs/:droneId", async (req, res) => {
   try {
     const { droneId } = req.params;
-    const response = await axios.get(CONFIG_URL);
-    
-    // จัดการข้อมูลที่อาจจะส่งมาในรูปแบบ .data หรือ .data.data
-    const configs = response.data.data || response.data;
-    
+
+    // --- ส่วนที่แก้ไข ---
+    // ใช้ข้อมูลจำลองแทนการเรียก API ของอาจารย์
+    const configs = mockConfigs;
+    // ------------------
+
     const drone = configs.find((d) => d.drone_id == droneId);
     if (!drone) {
-      return res.status(404).json({ message: "Drone config not found" });
+      return res.status(404).json({ message: "Not found" });
     }
-
     res.json({
       drone_id: drone.drone_id,
       drone_name: drone.drone_name,
       light: drone.light,
       country: drone.country,
-      weight: drone.weigh, // ในต้นทางอาจเป็น weigh แต่โจทย์ต้องการ weight [cite: 30, 38]
+      weight: drone.weigh,
     });
   } catch (err) {
     console.error("Error fetching drone configs:", err.message);
@@ -58,21 +59,21 @@ app.get("/configs/:droneId", async (req, res) => {
  * ข้อมูลที่ตอบกลับจะมีเฉพาะ: condition [cite: 44]
  */
 app.get("/status/:droneId", async (req, res) => {
-  try {
-    const { droneId } = req.params;
-    const response = await axios.get(CONFIG_URL);
+  try {
+    const { droneId } = req.params;
 
-    const configs = response.data.data || response.data;
-    
-    const drone = configs.find((d) => d.drone_id == droneId);
-    if (!drone) {
-      return res.status(404).json({ message: "Drone status not found" });
-    }
+    // --- แก้ไขเป็นแบบนี้ ---
+    const configs = mockConfigs;
+    // ----------------------
 
-    res.json({
-      condition: drone.condition,
-    });
-  } catch (err) {
+    const drone = configs.find((d) => d.drone_id == droneId);
+    if (!drone) {
+      return res.status(404).json({ message: "Drone status not found" });
+    }
+    res.json({
+      condition: drone.condition, // ดึงค่า condition จากข้อมูลจำลอง
+    });
+  } catch (err) { 
     console.error("Error fetching drone status:", err.message);
     res.status(500).json({ error: "Failed to fetch drone status" });
   }

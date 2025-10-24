@@ -1,0 +1,18 @@
+[
+  {
+    "drone_id": 3001,
+    "drone_name": "Dot Dot",
+    "light": "on",
+    "country": "India",
+    "weigh": 21,
+    "condition": "good"
+  },
+  {
+    "drone_id": 3002,
+    "drone_name": "Ranger",
+    "light": "off",
+    "country": "USA",
+    "weigh": 25,
+    "condition": "maintenance"
+  }
+]
