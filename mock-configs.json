@@ -14,5 +14,13 @@
     "country": "USA",
     "weigh": 25,
     "condition": "maintenance"
+  },
+  {
+    "drone_id": 3003,
+    "drone_name": "Sky Eye",
+    "light": "on",
+    "country": "Canada",
+    "weigh": 18,
+    "condition": "good"
   }
 ]

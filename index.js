@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mockConfigs from './mock-configs.json' assert { type: 'json' }; // <-- เพิ่มบรรทัดนี้
 
-// --- 1. Setup ---
+// --- 1. Setup ----
 dotenv.config();
 const app = express();
 app.use(cors());
