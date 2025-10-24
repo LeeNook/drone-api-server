@@ -1,10 +1,25 @@
-// index.js (ฉบับสมบูรณ์)
+// index.js (Backend)
 
+// เพิ่ม 3 บรรทัดนี้ที่ด้านบนสุด
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// import เดิมของคุณ
 import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 import cors from "cors";
-import mockConfigs from './mock-configs.json' assert { type: 'json' }; // <-- เพิ่มบรรทัดนี้
+
+// --- ส่วนที่แก้ไข ---
+// ลบบรรทัด import assert เดิมออก
+
+// ใช้วิธีนี้ในการอ่านไฟล์ JSON แทน
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const mockConfigsPath = path.join(__dirname, 'mock-configs.json');
+const mockConfigs = JSON.parse(fs.readFileSync(mockConfigsPath, 'utf-8'));
+// ------------------
 
 // --- 1. Setup ----
 dotenv.config();
